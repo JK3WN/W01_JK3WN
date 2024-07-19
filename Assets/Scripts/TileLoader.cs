@@ -77,7 +77,6 @@ public class TileLoader : MonoBehaviour
                 GenerateTile(tileType, position);
             }
         }
-        Debug.Log("1");
         ConnectLaser();
     }
 

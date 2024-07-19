@@ -49,14 +49,14 @@ public class playermove : MonoBehaviour
             transform.rotation = Quaternion.Euler(rMap.transform.rotation.x,
                 rMap.transform.rotation.y, -rMap.transform.rotation.z);
 
-            // ÁÂ¿ì ÀÌµ¿
+            // Move Left & Right
             float moveInput = Input.GetAxis("Horizontal");
             if (!isStoped)
             {
                 rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
             }
 
-            // Á¡ÇÁ
+            // Jump
             if (Input.GetKeyDown(KeyCode.Space) && isGrounded && !isStoped)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -160,13 +160,12 @@ public class playermove : MonoBehaviour
     public void RayCheck()
     {
         // 플레이어 벽 체크
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 0.2f, Vector2.zero, 0.2f);
-
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 1f, Vector2.zero, 0f);
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Laser"))
             {
-
+                Debug.Log(hit.collider.gameObject.name);
                 rMap.GetComponent<RotateMap>().AttachPlayer();
 
                 return;
