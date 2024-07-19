@@ -63,7 +63,7 @@ public class playermove : MonoBehaviour
                 isGrounded = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.T) && !rMap.GetComponent<RotateMap>().IsRotating && !isInZone && !isNoTime)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !rMap.GetComponent<RotateMap>().IsRotating && !isInZone && !isNoTime)
             {
                 if (isStoped)
                 {
