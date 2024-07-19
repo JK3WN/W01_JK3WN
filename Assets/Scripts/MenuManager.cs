@@ -14,6 +14,7 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 60;
         if (PlayerPrefs.GetInt("Clear") <= 0) PlayerPrefs.SetInt("Clear", 1);
         if(PlayerPrefs.GetInt("Clear") >= 21) SpecialGroup.gameObject.SetActive(true);
         else SpecialGroup.gameObject.SetActive(false);
