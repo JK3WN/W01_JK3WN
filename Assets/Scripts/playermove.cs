@@ -99,6 +99,7 @@ public class playermove : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                PlayerPrefs.SetInt("FromGame", 1);
                 SceneManager.LoadScene(0);
             }
         }

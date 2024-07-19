@@ -33,7 +33,10 @@ public class MenuManager : MonoBehaviour
                 buttons[i].interactable = true;
             }
         }
-            
+        if(PlayerPrefs.GetInt("FromGame") == 1)
+        {
+            StartPressed();
+        }
     }
     public void StartPressed()
     {
@@ -74,5 +77,10 @@ public class MenuManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Clear", 21);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("FromGame", 0);
     }
 }
