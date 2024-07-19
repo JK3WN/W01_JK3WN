@@ -19,6 +19,7 @@ public class PlayerIndicator : MonoBehaviour
 
         // 회전 적용
         transform.position = rotatedPosition;
+        transform.rotation = Quaternion.Euler(0, 0, isRight ? -90 : 90);
     }
 
     Vector3 RotatePointAroundOrigin2D(Vector3 point, float angle)
