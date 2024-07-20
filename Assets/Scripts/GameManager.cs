@@ -15,4 +15,9 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    public void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("FromGame", 0);
+    }
 }

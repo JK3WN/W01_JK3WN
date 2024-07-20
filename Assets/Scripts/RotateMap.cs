@@ -48,15 +48,16 @@ public class RotateMap : MonoBehaviour
             {
                 ind.gameObject.SetActive(false);
             }
-
+            //player.GetComponent<LineRenderer>().enabled = false;
             yield return null;
         }
 
         foreach (GameObject ind in Indicators)
         {
+            Debug.Log("fuck");
             ind.gameObject.SetActive(true);
         }
-
+        //player.GetComponent<LineRenderer>().enabled = true;
         DetachPlayer();
 
         // 정확한 회전 각도 설정

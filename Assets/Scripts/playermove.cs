@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,6 +30,7 @@ public class playermove : MonoBehaviour
 
     public TextDisplay TD;
     public GameObject clearUI;
+    public LineRenderer circleRenderer;
 
     public string playerType;
     public string PlayerType {  get { return playerType; } }
@@ -49,21 +51,21 @@ public class playermove : MonoBehaviour
             transform.rotation = Quaternion.Euler(rMap.transform.rotation.x,
                 rMap.transform.rotation.y, -rMap.transform.rotation.z);
 
-            // ÁÂ¿ì ÀÌµ¿
+            // Move Left & Right
             float moveInput = Input.GetAxis("Horizontal");
             if (!isStoped)
             {
                 rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
             }
 
-            // Á¡ÇÁ
+            // Jump
             if (Input.GetKeyDown(KeyCode.Space) && isGrounded && !isStoped)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 isGrounded = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.T) && !rMap.GetComponent<RotateMap>().IsRotating && !isInZone && !isNoTime)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !rMap.GetComponent<RotateMap>().IsRotating && !isInZone && !isNoTime)
             {
                 if (isStoped)
                 {
@@ -73,7 +75,7 @@ public class playermove : MonoBehaviour
                     {
                         ind.SetActive(false);
                     }
-
+                    circleRenderer.enabled = false;
                     sandClockUI.SetActive(false);
                     rb.gravityScale = 1;
                     rb.velocity = postForce;
@@ -86,7 +88,7 @@ public class playermove : MonoBehaviour
                     {
                         ind.SetActive(true);
                     }
-
+                    circleRenderer.enabled = true;
                     sandClockUI.SetActive(true);
                     postForce = rb.velocity;
                     rb.velocity = Vector2.zero;
@@ -99,8 +101,11 @@ public class playermove : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                PlayerPrefs.SetInt("FromGame", 1);
                 SceneManager.LoadScene(0);
             }
+
+            DrawCircle(Mathf.Sqrt(transform.position.x * transform.position.x + transform.position.y * transform.position.y));
         }
     }
 
@@ -133,7 +138,7 @@ public class playermove : MonoBehaviour
             {
                 ind.SetActive(false);
             }
-
+            circleRenderer.enabled = false;
             sandClockUI.SetActive(false);
             rb.gravityScale = 1;
             rb.velocity = postForce;
@@ -202,5 +207,20 @@ public class playermove : MonoBehaviour
         playerType = type;
 
         GetComponent<SpriteRenderer>().color = color;
+    }
+
+    void DrawCircle(float radius)
+    {
+        circleRenderer.positionCount = 100;
+        for(int i= 0;i< circleRenderer.positionCount; i++)
+        {
+            float cp = (float)i / 100 - 0.5f;
+            float radian = cp * Mathf.PI + Vector2.SignedAngle(Vector2.right, new Vector2(transform.position.x, transform.position.y)) * Mathf.Deg2Rad;
+            float x = radius * Mathf.Cos(radian);
+            float y = radius * Mathf.Sin(radian);
+
+            Vector3 currentPos = new Vector3(x, y, 0);
+            circleRenderer.SetPosition(i, currentPos);
+        }
     }
 }

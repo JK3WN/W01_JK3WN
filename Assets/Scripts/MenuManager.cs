@@ -14,6 +14,7 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 60;
         if (PlayerPrefs.GetInt("Clear") <= 0) PlayerPrefs.SetInt("Clear", 1);
         if(PlayerPrefs.GetInt("Clear") >= 21) SpecialGroup.gameObject.SetActive(true);
         else SpecialGroup.gameObject.SetActive(false);
@@ -32,7 +33,10 @@ public class MenuManager : MonoBehaviour
                 buttons[i].interactable = true;
             }
         }
-            
+        if(PlayerPrefs.GetInt("FromGame") == 1)
+        {
+            StartPressed();
+        }
     }
     public void StartPressed()
     {
@@ -73,5 +77,10 @@ public class MenuManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Clear", 21);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("FromGame", 0);
     }
 }

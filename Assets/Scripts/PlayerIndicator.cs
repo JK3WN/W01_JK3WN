@@ -19,8 +19,8 @@ public class PlayerIndicator : MonoBehaviour
 
         // 회전 적용
         transform.position = rotatedPosition;
+        transform.rotation = Quaternion.Euler(0, 0, isRight ? -90 : 90);
     }
-
     Vector3 RotatePointAroundOrigin2D(Vector3 point, float angle)
     {
         float rad = angle * Mathf.Deg2Rad;
@@ -29,7 +29,7 @@ public class PlayerIndicator : MonoBehaviour
 
         float newX = point.x * cos + point.y * sin;
         float newY = -point.x * sin + point.y * cos;
-
+        
         return new Vector3(newX, newY, 0);
     }
 
